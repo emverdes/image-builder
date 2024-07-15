@@ -1,0 +1,47 @@
+name = "rhel9-basic"
+description = "A base system with customizations"
+version = "0.0.1"
+distro = "rhel-93"
+
+packages = [
+  { name = "tmux", version = "*" },
+  { name = "httpd", version = "*" }
+]
+
+groups = [
+  { name = "Server" }
+]
+  
+[customizations]
+hostname = "rhel9basic"
+partitioning_mode = "lvm"
+
+[[customizations.user]]
+name = "admin"
+description = "System Adminisrator"
+password = "$6$52VTwXRApkBNBZLT$1xYrt/uGGxir28jExJv7RFJ4UEhAGLrtglVUvCphMlR2sgBhZjZa/D05PpRkbe5QXfkv7rCFW2vL.pAnsTEiH/"
+home = "/home/admin/"
+shell = "/bin/bash"
+groups = ["wheel"]
+
+[customizations.timezone]
+timezone = "America/Montevideo"
+
+[customizations.locale]
+languages = ["es_ES.UTF-8"]
+keyboard = "es"
+
+[customizations.firewall.services]
+enabled = ["http", "https", "ssh", "cockpit"]
+
+[customizations.services]
+enabled = ["sshd", "httpd"]
+
+[[customizations.filesystem]]
+mountpoint = "/"
+minsize = 5368709120
+
+[[customizations.filesystem]]
+mountpoint = "/var"
+minsize = 536870912
+
